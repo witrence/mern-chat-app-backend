@@ -77,7 +77,7 @@ const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "https://luxury-paprenjak-622e3d.netlify.app",
+    origin: "mern-chatlink-app.netlify.app",
   },
 });
 
