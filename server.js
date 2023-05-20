@@ -20,6 +20,13 @@ const app = express();
 // accepting the json file from frontend
 app.use(express.json());
 
+// enabling cors
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 // moved to below deployement in else part
 app.get("/", (request, response) => {
   response.send("API is running successfully");
