@@ -2,12 +2,13 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
-const cors = require("cors");
-
 // const { chats } = require("./data/data");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
+
+
+const cors = require("cors");
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 
@@ -25,10 +26,16 @@ app.use(express.json());
 // enabling cors
 app.use(cors());
 
-// moved to below deployement in else part
-// app.get("/", (request, response) => {
-//   response.send("API is running successfully");
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
 // });
+
+// moved to below deployement in else part
+app.get("/", (request, response) => {
+  response.send("API is running successfully");
+});
 
 // app.get("/api/chat", (req, res) => {
 //   res.send(chats);
@@ -58,32 +65,19 @@ app.use("/api/message", messageRoutes);
 //   });
 // }
 
-const __dirname1 = path.resolve();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname1, "/")));
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname1, "index.html"));
-  });
-} else {
-  app.get("/", (request, response) => {
-    response.send("API is running successfully");
-  });
-}
-
 // ************** DEPLOYEMENT CODE *******************
 app.use(notFound);
 app.use(errorHandler);
 
 const PORT = process.env.PORT;
-// console.log(PORT);
+console.log(PORT);
 
 const server = app.listen(PORT, console.log(`Server started on port ${PORT}`));
 
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://mern-chatlink-app.netlify.app",
   },
 });
 
