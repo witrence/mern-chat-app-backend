@@ -2,6 +2,8 @@ const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 
+const cors = require("cors");
+
 // const { chats } = require("./data/data");
 const userRoutes = require("./routes/userRoutes");
 const chatRoutes = require("./routes/chatRoutes");
@@ -19,6 +21,9 @@ const app = express();
 
 // accepting the json file from frontend
 app.use(express.json());
+
+// enabling cors
+app.use(cors());
 
 // moved to below deployement in else part
 // app.get("/", (request, response) => {
